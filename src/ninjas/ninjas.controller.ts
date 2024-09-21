@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -28,7 +29,12 @@ export class NinjasController {
   @Get(':id')
   // param-decorator takes the parameter from the Get-Decorator and transports it into the get-function:
   getOneNinja(@Param('id') id: number) {
-    return this.ninjasService.getNinja(id);
+    try {
+      return this.ninjasService.getNinja(id);
+    } catch (error) {
+      console.log(error);
+      throw new NotFoundException();
+    }
   }
 
   // POST /ninjas
